@@ -28,6 +28,7 @@ class CategoryMealsScreen extends StatelessWidget {
 
             return MealItem(
               key: ValueKey(index),
+              id: selectedMeal.id,
               title: selectedMeal.title,
               imageUrl: selectedMeal.imageUrl,
               duration: selectedMeal.duration,
