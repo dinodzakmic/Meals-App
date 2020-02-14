@@ -9,11 +9,11 @@ class MealDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 5),
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(),
+        border: Border.all(color: Colors.black12),
         borderRadius: BorderRadius.circular(5),
       ),
       child: child,
