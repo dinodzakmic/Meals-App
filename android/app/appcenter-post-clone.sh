@@ -15,6 +15,9 @@ export PATH=`pwd`/flutter/bin:$PATH
 
 flutter channel stable
 flutter doctor
+
+#probably gradle is hidden or not available
+
 flutter build apk --release
 
 # copy the APK where AppCenter will find it
