@@ -7,11 +7,11 @@ import './drawer_item.dart';
 
 class MainDrawer extends StatelessWidget {
   openHome(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(TabsScreen.routeName);
+    Navigator.of(ctx).pushReplacementNamed(TabsScreen.routeName);
   }
 
   openFilters(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(FiltersScreen.routeName);
+    Navigator.of(ctx).pushReplacementNamed(FiltersScreen.routeName);
   }
 
   @override
