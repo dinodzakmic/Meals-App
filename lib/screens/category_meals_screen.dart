@@ -6,6 +6,10 @@ import './../dummy-data.dart';
 class CategoryMealsScreen extends StatelessWidget {
   static const routeName = '/category-meals';
 
+  removeItem(String id) {
+    print(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArgs =
@@ -34,6 +38,7 @@ class CategoryMealsScreen extends StatelessWidget {
               duration: selectedMeal.duration,
               complexity: selectedMeal.complexity,
               affordability: selectedMeal.affordability,
+              removeItem: removeItem,
             );
           },
           itemCount: categoryMeals.length ?? 0,

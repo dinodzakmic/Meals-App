@@ -40,6 +40,10 @@ class MealDetailsScreen extends StatelessWidget {
     }
   }
 
+  removeThisItem(BuildContext ctx, String mealId) {
+    Navigator.of(ctx).pop(mealId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArgs =
@@ -195,6 +199,12 @@ class MealDetailsScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: () {
+          removeThisItem(context, mealId);
+        },
       ),
     );
   }
