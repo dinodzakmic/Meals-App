@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class DrawerItem extends StatelessWidget {
   final IconData iconData;
   final String titleText;
-  final Function selected;
+  final Function selectedHandler;
 
-  const DrawerItem({this.iconData, this.titleText, this.selected});
+  const DrawerItem({this.iconData, this.titleText, this.selectedHandler});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class DrawerItem extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: selected,
+      onTap: selectedHandler,
     );
   }
 }

@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/tabs_screen.dart';
 
+import './../screens/filters_screen.dart';
+import './../screens/tabs_screen.dart';
 import './drawer_item.dart';
 
 class MainDrawer extends StatelessWidget {
+  openHome(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(TabsScreen.routeName);
+  }
+
+  openFilters(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(FiltersScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,8 +42,20 @@ class MainDrawer extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          DrawerItem(iconData: Icons.restaurant, titleText: 'Meals'),
-          DrawerItem(iconData: Icons.settings, titleText: 'Settings'),
+          DrawerItem(
+            iconData: Icons.restaurant,
+            titleText: 'Meals',
+            selectedHandler: () {
+              openHome(context);
+            },
+          ),
+          DrawerItem(
+            iconData: Icons.settings,
+            titleText: 'Settings',
+            selectedHandler: () {
+              openFilters(context);
+            },
+          )
         ],
       ),
     );
