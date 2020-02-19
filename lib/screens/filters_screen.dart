@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
 
 import './../widgets/main_drawer.dart';
+import './../models/filters.dart';
 
 class FiltersScreen extends StatefulWidget {
   static const routeName = '/filters-screen';
+  final Filters filters;
+  final Function saveFilters;
+
+  const FiltersScreen({this.filters, this.saveFilters});
 
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  bool _glutenFree = false;
-  bool _vegetarian = false;
-  bool _vegan = false;
-  bool _lactoseFree = false;
+  bool _glutenFree = true;
+  bool _vegetarian = true;
+  bool _vegan = true;
+  bool _lactoseFree = true;
+
+  @override
+  void initState() {
+    _glutenFree = widget.filters.showGlutenFree;
+    _lactoseFree = widget.filters.showLactoseFree;
+    _vegan = widget.filters.showVegan;
+    _vegetarian = widget.filters.showVegetarian;
+
+    super.initState();
+  }
+
+  initializeFilterSaving() {
+    Filters newFilters = Filters();
+    newFilters.updateFilter(
+        glutenFree: _glutenFree,
+        lactoseFree: _lactoseFree,
+        vegan: _vegan,
+        vegetarian: _vegetarian);
+
+    widget.saveFilters(newFilters);
+  }
 
   SwitchListTile buildSwitchListTile(
       {String titleText,
@@ -33,6 +59,19 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Filters'),
+        actions: <Widget>[
+          FlatButton(
+            child: Icon(Icons.save),
+            onPressed: () {
+              initializeFilterSaving();
+
+              // final snackbar = SnackBar(
+              //   content: Text('Filter is saved!'),
+              // );
+              // Scaffold.of(context).showSnackBar(snackbar);
+            },
+          )
+        ],
       ),
       drawer: MainDrawer(),
       body: Column(
@@ -51,7 +90,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               children: <Widget>[
                 buildSwitchListTile(
                     titleText: 'Gluten-Free',
-                    subtitleText: 'Only include gluten-free meals.',
+                    subtitleText: 'Include gluten-free meals.',
                     initialValue: _glutenFree,
                     updateValue: (newValue) {
                       setState(() {
@@ -60,7 +99,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     }),
                 buildSwitchListTile(
                     titleText: 'Lactose-Free',
-                    subtitleText: 'Only include lactose-free meals.',
+                    subtitleText: 'Include lactose-free meals.',
                     initialValue: _lactoseFree,
                     updateValue: (newValue) {
                       setState(() {
@@ -69,7 +108,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     }),
                 buildSwitchListTile(
                     titleText: 'Vegan',
-                    subtitleText: 'Only include vegan meals.',
+                    subtitleText: 'Include vegan meals.',
                     initialValue: _vegan,
                     updateValue: (newValue) {
                       setState(() {
@@ -78,7 +117,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     }),
                 buildSwitchListTile(
                     titleText: 'Vegetarian',
-                    subtitleText: 'Only include vegetarian meals.',
+                    subtitleText: 'Include vegetarian meals.',
                     initialValue: _vegetarian,
                     updateValue: (newValue) {
                       setState(() {
