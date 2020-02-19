@@ -7,6 +7,8 @@ class FavoritesScreen extends StatelessWidget {
   final List<MealClient> favoriteMeals;
   const FavoritesScreen({this.favoriteMeals});
 
+  //TODO If the user opens the MealDetailsScreen from FavoritesScreen and unfavorite the meal, it is not updated when he goes back to FavoritesScreen
+
   @override
   Widget build(BuildContext context) {
     return Center(
