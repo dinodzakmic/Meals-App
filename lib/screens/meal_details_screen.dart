@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/widgets/meal_details_section.dart';
 import 'package:meals_app/widgets/meal_details_title.dart';
 
-import './../dummy-data.dart';
 import './../models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   static const routeName = "/meal-detail";
+
+  final List<MealClient> availableMeals;
+  final Function makeFavoriteMeal;
+
+  const MealDetailsScreen({this.availableMeals, this.makeFavoriteMeal});
 
   String getComplexityText(Complexity complexity) {
     switch (complexity) {
@@ -40,10 +44,6 @@ class MealDetailsScreen extends StatelessWidget {
     }
   }
 
-  removeThisItem(BuildContext ctx, String mealId) {
-    Navigator.of(ctx).pop(mealId);
-  }
-
   @override
   Widget build(BuildContext context) {
     final routeArgs =
@@ -51,8 +51,8 @@ class MealDetailsScreen extends StatelessWidget {
 
     final String mealId = routeArgs['id'];
 
-    final Meal selectedMeal =
-        DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
+    final MealClient selectedMeal =
+        availableMeals.firstWhere((meal) => meal.id == mealId);
 
     final int duration = selectedMeal.duration;
 
@@ -201,9 +201,12 @@ class MealDetailsScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
+        child: Icon(
+          Icons.star,
+          color: selectedMeal.isFavorite ? Colors.black : Colors.black26,
+        ),
         onPressed: () {
-          removeThisItem(context, mealId);
+          makeFavoriteMeal(selectedMeal.id);
         },
       ),
     );

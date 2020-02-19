@@ -6,7 +6,7 @@ import './../models/meal.dart';
 class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
 
-  final List<Meal> availableMeals;
+  final List<MealClient> availableMeals;
 
   const CategoryMealsScreen({this.availableMeals});
 
@@ -17,7 +17,7 @@ class CategoryMealsScreen extends StatefulWidget {
 class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
   bool _initialCategoriesDisplay = true;
   String categoryTitle;
-  List<Meal> displayedMeals;
+  List<MealClient> displayedMeals;
 
   @override
   void didChangeDependencies() {
@@ -55,15 +55,13 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
             var selectedMeal = displayedMeals[index];
 
             return MealItem(
-              key: ValueKey(index),
-              id: selectedMeal.id,
-              title: selectedMeal.title,
-              imageUrl: selectedMeal.imageUrl,
-              duration: selectedMeal.duration,
-              complexity: selectedMeal.complexity,
-              affordability: selectedMeal.affordability,
-              removeItem: removeItem,
-            );
+                key: ValueKey(index),
+                id: selectedMeal.id,
+                title: selectedMeal.title,
+                imageUrl: selectedMeal.imageUrl,
+                duration: selectedMeal.duration,
+                complexity: selectedMeal.complexity,
+                affordability: selectedMeal.affordability);
           },
           itemCount: displayedMeals.length ?? 0,
         ),

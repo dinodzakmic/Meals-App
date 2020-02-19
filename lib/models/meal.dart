@@ -41,3 +41,23 @@ class Meal {
       @required this.isVegan,
       @required this.isVegetarian});
 }
+
+class MealClient extends Meal {
+  bool isFavorite = false;
+
+  MealClient({@required meal})
+      : super(
+            id: meal.id,
+            categories: meal.categories,
+            title: meal.title,
+            imageUrl: meal.imageUrl,
+            ingredients: meal.ingredients,
+            steps: meal.steps,
+            duration: meal.duration,
+            complexity: meal.complexity,
+            affordability: meal.affordability,
+            isGlutenFree: meal.isGlutenFree,
+            isLactoseFree: meal.isLactoseFree,
+            isVegan: meal.isVegan,
+            isVegetarian: meal.isVegetarian);
+}

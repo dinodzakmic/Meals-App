@@ -17,24 +17,50 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Filters _filters = Filters();
-  List<Meal> availableMeals = DUMMY_MEALS;
+  List<MealClient> _availableMeals = DUMMY_MEALS.map((meal) {
+    return MealClient(meal: meal);
+  }).toList();
+  List<MealClient> _favoriteMeals = [];
 
-  saveAndUpdateFilters(Filters newFilters) {
+  _saveAndUpdateFilters(Filters newFilters) {
     _filters = newFilters;
 
-    availableMeals = availableMeals.where((meal) {
-      if (meal.isGlutenFree && _filters.showGlutenFree) return true;
+    _availableMeals = DUMMY_MEALS
+        .map((meal) {
+          return MealClient(meal: meal);
+        })
+        .toList()
+        .where((meal) {
+          if (meal.isGlutenFree && _filters.showGlutenFree) return true;
 
-      if (meal.isLactoseFree && _filters.showLactoseFree) return true;
+          if (meal.isLactoseFree && _filters.showLactoseFree) return true;
 
-      if (meal.isVegan && _filters.showVegan) return true;
+          if (meal.isVegan && _filters.showVegan) return true;
 
-      if (meal.isVegetarian && _filters.showVegetarian) return true;
+          if (meal.isVegetarian && _filters.showVegetarian) return true;
 
-      if (_filters.checkIfShowAll()) return true;
+          if (_filters.checkIfShowAll()) return true;
 
-      return false;
-    }).toList();
+          return false;
+        })
+        .toList();
+  }
+
+  _toggleFavorite(String id) {
+    final selectedMeal = _availableMeals.firstWhere((meal) => meal.id == id);
+    final alreadyFavorite = _favoriteMeals.contains(selectedMeal);
+
+    if (alreadyFavorite) {
+      setState(() {
+        selectedMeal.isFavorite = false;
+        _favoriteMeals.remove(selectedMeal);
+      });
+    } else {
+      setState(() {
+        selectedMeal.isFavorite = true;
+        _favoriteMeals.add(selectedMeal);
+      });
+    }
   }
 
   @override
@@ -55,15 +81,20 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
         ),
-        home: TabsScreen(),
         routes: {
-          CategoryMealsScreen.routeName: (context) => CategoryMealsScreen(
-                availableMeals: availableMeals,
+          TabsScreen.routeName: (context) => TabsScreen(
+                favoriteMeals: _favoriteMeals,
               ),
-          MealDetailsScreen.routeName: (context) => MealDetailsScreen(),
+          CategoryMealsScreen.routeName: (context) => CategoryMealsScreen(
+                availableMeals: _availableMeals,
+              ),
+          MealDetailsScreen.routeName: (context) => MealDetailsScreen(
+                availableMeals: _availableMeals,
+                makeFavoriteMeal: _toggleFavorite,
+              ),
           FiltersScreen.routeName: (context) => FiltersScreen(
                 filters: _filters,
-                saveFilters: saveAndUpdateFilters,
+                saveFilters: _saveAndUpdateFilters,
               ),
         });
   }
