@@ -8,6 +8,8 @@ import './models/filters.dart';
 import './dummy-data.dart';
 import './models/meal.dart';
 
+//TODO Add App icon and some styling stuff
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
